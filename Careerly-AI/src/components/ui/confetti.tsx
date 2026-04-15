@@ -106,6 +106,7 @@ export function ConfettiBurst({
               opacity: [1, 1, 0],
             }}
             transition={{
+              // eslint-disable-next-line react-hooks/purity
               duration: 2 + Math.random() * 0.5,
               ease: [0.2, 0.8, 0.4, 1] as const,
             }}

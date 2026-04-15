@@ -82,7 +82,9 @@ export function CoinCollectionAnimation() {
       startY: (Math.random() - 0.5) * 200 + 100,
       delay: i * 0.06,
     }));
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCoins(newCoins);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setShowAmount(true);
 
     const timer = setTimeout(() => {

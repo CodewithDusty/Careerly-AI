@@ -30,8 +30,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // Setup mock user for local demo immediately
       const savedUser = localStorage.getItem("careerly_mock_user");
       if (savedUser) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setUser(JSON.parse(savedUser));
       }
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setLoading(false);
       return;
     }
@@ -54,6 +56,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signInWithEmail = async (email: string, password: string) => {
     if (isMockMode) {
       await new Promise((resolve) => setTimeout(resolve, 800)); // fake delay
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mockUser = { id: "mock-123", email, user_metadata: { full_name: "Demo User" } } as any;
       setUser(mockUser);
       localStorage.setItem("careerly_mock_user", JSON.stringify(mockUser));
@@ -67,6 +70,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUpWithEmail = async (email: string, password: string, fullName: string) => {
     if (isMockMode) {
       await new Promise((resolve) => setTimeout(resolve, 800)); // fake delay
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mockUser = { id: "mock-123", email, user_metadata: { full_name: fullName } } as any;
       setUser(mockUser);
       localStorage.setItem("careerly_mock_user", JSON.stringify(mockUser));

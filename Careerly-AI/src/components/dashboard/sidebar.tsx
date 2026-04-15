@@ -63,7 +63,7 @@ export function Sidebar() {
     return pathname.startsWith(href);
   };
 
-  const SidebarContent = ({ mobile = false }: { mobile?: boolean }) => (
+  const renderSidebarContent = (mobile = false) => (
     <div className="flex h-full flex-col">
       {/* Logo */}
       <div className="flex items-center gap-3 px-5 py-6">
@@ -243,7 +243,7 @@ export function Sidebar() {
         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
         className="hidden lg:flex flex-col fixed left-0 top-0 bottom-0 z-40 border-r border-white/[0.06] bg-sidebar"
       >
-        <SidebarContent />
+        {renderSidebarContent(false)}
 
         {/* Collapse toggle */}
         <button
@@ -288,7 +288,7 @@ export function Sidebar() {
               >
                 <X className="h-5 w-5" />
               </button>
-              <SidebarContent mobile />
+              {renderSidebarContent(true)}
             </motion.aside>
           </>
         )}
