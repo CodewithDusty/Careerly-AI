@@ -22,7 +22,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // If Supabase URL is missing, we use a mock mode for UI preview
+  const isMockMode = !process.env.NEXT_PUBLIC_SUPABASE_URL;
+
   useEffect(() => {
+    if (isMockMode) {
+      // Setup mock user for local demo immediately
+      const savedUser = localStorage.getItem("careerly_mock_user");
+      if (savedUser) {
+        setUser(JSON.parse(savedUser));
+      }
+      setLoading(false);
+      return;
+    }
+
     // Get initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
@@ -36,14 +49,30 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [isMockMode]);
 
   const signInWithEmail = async (email: string, password: string) => {
+    if (isMockMode) {
+      await new Promise((resolve) => setTimeout(resolve, 800)); // fake delay
+      const mockUser = { id: "mock-123", email, user_metadata: { full_name: "Demo User" } } as any;
+      setUser(mockUser);
+      localStorage.setItem("careerly_mock_user", JSON.stringify(mockUser));
+      return { error: null };
+    }
+
     const { error } = await supabase.auth.signInWithPassword({ email, password });
     return { error: error?.message ?? null };
   };
 
   const signUpWithEmail = async (email: string, password: string, fullName: string) => {
+    if (isMockMode) {
+      await new Promise((resolve) => setTimeout(resolve, 800)); // fake delay
+      const mockUser = { id: "mock-123", email, user_metadata: { full_name: fullName } } as any;
+      setUser(mockUser);
+      localStorage.setItem("careerly_mock_user", JSON.stringify(mockUser));
+      return { error: null };
+    }
+
     const { error } = await supabase.auth.signUp({
       email,
       password,
@@ -55,6 +84,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signOut = async () => {
+    if (isMockMode) {
+      setUser(null);
+      localStorage.removeItem("careerly_mock_user");
+      return;
+    }
+    
     await supabase.auth.signOut();
     setUser(null);
   };
