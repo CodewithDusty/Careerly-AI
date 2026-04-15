@@ -240,7 +240,7 @@ export function Sidebar() {
       {/* Desktop Sidebar */}
       <motion.aside
         animate={{ width: collapsed ? 72 : 260 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
         className="hidden lg:flex flex-col fixed left-0 top-0 bottom-0 z-40 border-r border-white/[0.06] bg-sidebar"
       >
         <SidebarContent />
@@ -297,7 +297,7 @@ export function Sidebar() {
       {/* Spacer for desktop content offset */}
       <motion.div
         animate={{ width: collapsed ? 72 : 260 }}
-        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
         className="hidden lg:block shrink-0"
       />
     </>

@@ -436,7 +436,7 @@ export default function RoadmapPage() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
                   >
                     <div className="border-t border-white/[0.06] px-5 py-3 space-y-1">
                       {phase.steps.map((step, stepIndex) => {

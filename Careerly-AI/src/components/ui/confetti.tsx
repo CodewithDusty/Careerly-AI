@@ -107,7 +107,7 @@ export function ConfettiBurst({
             }}
             transition={{
               duration: 2 + Math.random() * 0.5,
-              ease: [0.2, 0.8, 0.4, 1],
+              ease: [0.2, 0.8, 0.4, 1] as const,
             }}
             className="absolute"
             style={{ color: particle.color }}
